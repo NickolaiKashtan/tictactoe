@@ -1,9 +1,14 @@
 const area = document.getElementById("area");
 let move = 0;
-let result = "";
+
+const contentWrapper = document.getElementById('content');
+const modalResult = document.getElementById('modal-window-wrapper');
+const overlay = document.getElementById('overlay');
+const button = document.getElementById('btn-close');
+
 area.addEventListener('click', e => {
     if (e.target.className == "box"){
-        move%2 === 0 ? e.target.innerHTML = "X" : e.target.innerHTML = "<i class='bx bx-radio-circle' ></i>";
+        move%2 === 0 ? e.target.innerHTML = "X" : e.target.innerHTML= "0";
         move++;
         
         check();
@@ -24,27 +29,44 @@ const check = () => {
         [2, 4, 6]
     ]
 
+
+
     for(i = 0; i < arr.length; i++) {
         if(
             boxes[arr[i][0]].innerHTML == "X" && boxes[arr[i][1]].innerHTML == "X" && boxes[arr[i][2]].innerHTML == "X"
             )
         {
-            result = "Крестики";
+            let result = "Крестики";
             prepareResult(result);
 
         } else if (
-            boxes[arr[i][0]].innerHTML == "<i class='bx bx-radio-circle' ></i>" && boxes[arr[i][1]].innerHTML == "<i class='bx bx-radio-circle' ></i>" && boxes[arr[i][2]].innerHTML == "<i class='bx bx-radio-circle' ></i>"
+            boxes[arr[i][0]].innerHTML === "0" && boxes[arr[i][1]].innerHTML === "0" && boxes[arr[i][2]].innerHTML === "0"
             )
         {
-            result = "Нолики"
+            let result = "Нолики"
             prepareResult(result);
         }
-
+        
         
     }
+
 }
 
+
+
 function prepareResult(winner) {
-    console.log(winner)
+        contentWrapper.innerHTML = `Победили ${winner}`;
+        modalResult.style.display = "block"; 
+
 }
+
+
+function close() {
+    modalResult.style.display = "none";
+    location.reload();
+}
+
+overlay.addEventListener("click", close);
+button.addEventListener("click", close);
+
 
